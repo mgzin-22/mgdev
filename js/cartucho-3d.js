@@ -41,6 +41,7 @@ if (container) {
   scene.add(rimLight);
 
   let model = null;
+  let baseScale = 1;
   let targetRotationY = -0.55;
   let targetRotationX = 0.18;
   let currentProject = "fluxy";
@@ -50,21 +51,36 @@ if (container) {
       rotationY: -0.55,
       rotationX: 0.18,
       positionY: 0.0,
-      scale: 2.25
+      scale: 1
     },
     store: {
       rotationY: -0.3,
       rotationX: 0.12,
       positionY: -0.02,
-      scale: 2.2
+      scale: 0.98
     },
     landing: {
       rotationY: -0.7,
       rotationX: 0.15,
       positionY: 0.01,
-      scale: 2.23
+      scale: 0.99
     }
   };
+
+  function fitModelToView(modelRoot) {
+    const box = new THREE.Box3().setFromObject(modelRoot);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+
+    if (!Number.isFinite(maxDim) || maxDim <= 0) {
+      return false;
+    }
+
+    modelRoot.position.sub(center);
+    baseScale = 2.4 / maxDim;
+    return true;
+  }
 
   function showError(message) {
     container.innerHTML = `
@@ -103,7 +119,12 @@ if (container) {
         }
       });
 
-      model.scale.setScalar(projectStyles[currentProject].scale);
+      const fitted = fitModelToView(model);
+      if (!fitted) {
+        console.warn("Não foi possível calcular o tamanho do modelo 3D.");
+      }
+
+      model.scale.setScalar(baseScale * projectStyles[currentProject].scale);
       model.position.set(0, projectStyles[currentProject].positionY, 0);
       model.rotation.set(
         projectStyles[currentProject].rotationX,
@@ -116,6 +137,12 @@ if (container) {
     undefined,
     (error) => {
       console.error("Erro ao carregar o modelo 3D:", error);
+
+      if (window.location.protocol === "file:") {
+        showError("Abra o projeto com um servidor local (ex: Live Server), não via arquivo local file://.");
+        return;
+      }
+
       showError('Confira se o arquivo "floppy_disk.glb" está em assets/models/ e recarregue com Ctrl + F5.');
     }
   );
@@ -146,7 +173,7 @@ if (container) {
     targetRotationY = style.rotationY;
     targetRotationX = style.rotationX;
     model.position.y = style.positionY;
-    model.scale.setScalar(style.scale);
+    model.scale.setScalar(baseScale * style.scale);
   });
 
   const clock = new THREE.Clock();
