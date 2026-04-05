@@ -1,0 +1,29 @@
+.contact-content {
+  text-align: center;
+}
+
+.contact-text {
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  padding: 14px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  transition: var(--transition);
+}
+
+.contact-links a:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124, 58, 237, 0.3);
+}

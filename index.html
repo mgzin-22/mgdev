@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mgdev | Portfólio</title>
+  <meta
+    name="description"
+    content="Portfólio pessoal de mgdev, Desenvolvedor Web e Criador de Sites."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/projects.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-content">
+      <a href="#home" class="logo">mgdev</a>
+
+      <nav class="nav" id="nav">
+        <a href="#home">Início</a>
+        <a href="#about">Sobre</a>
+        <a href="#projects">Projetos</a>
+      </nav>
+
+      <div class="socials">
+        <a href="#" target="_blank" aria-label="GitHub">GitHub</a>
+        <a href="#" target="_blank" aria-label="LinkedIn">LinkedIn</a>
+        <a href="#" target="_blank" aria-label="Instagram">Instagram</a>
+      </div>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-noise"></div>
+
+      <div class="hero-big-text hero-big-text-left">MGDEV</div>
+      <div class="hero-big-text hero-big-text-right">PORTFOLIO</div>
+
+      <div class="container hero-layout">
+        <div class="hero-left">
+          <span class="hero-label">Desenvolvedor Web • Criador de Sites</span>
+
+          <h1 class="hero-title">
+            criando<br />
+            experiências<br />
+            digitais
+          </h1>
+
+          <p class="hero-description">
+            Sou o mgdev. Desenvolvo sites com identidade visual forte,
+            composição artística e foco em presença digital.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">Ver projetos</a>
+            <a href="#about" class="btn btn-outline">Sobre mim</a>
+          </div>
+        </div>
+
+        <div class="hero-center">
+          <div class="hero-visual">
+            <div class="hero-glow hero-glow-one"></div>
+            <div class="hero-glow hero-glow-two"></div>
+
+            <div class="hero-portrait">
+              <div class="portrait-frame">
+                <div class="portrait-inner">
+                  <span class="portrait-text">mgdev</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-side-card">
+            <span class="side-title">Sobre</span>
+            <p>
+              Portfólio autoral com estética escura, minimalista e artística.
+            </p>
+          </div>
+
+          <div class="hero-side-card">
+            <span class="side-title">Redes</span>
+            <ul>
+              <li><a href="#" target="_blank">GitHub</a></li>
+              <li><a href="#" target="_blank">LinkedIn</a></li>
+              <li><a href="#" target="_blank">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-bg-text">ABOUT</div>
+
+      <div class="container about-layout">
+        <div class="about-left">
+          <span class="about-label">sobre mim</span>
+          <h2 class="about-title">
+            design, estrutura e código em uma estética mais autoral.
+          </h2>
+        </div>
+
+        <div class="about-right">
+          <p class="about-text">
+            Meu nome é <strong>mgdev</strong>. Sou desenvolvedor web e criador de
+            sites, com foco em interfaces modernas, visuais marcantes e projetos
+            com identidade própria.
+          </p>
+
+          <p class="about-text">
+            Gosto de construir páginas que não sejam apenas funcionais, mas que
+            também transmitam presença, estilo e direção visual bem definida.
+          </p>
+
+          <p class="about-text">
+            Meu objetivo é transformar ideias em experiências digitais organizadas,
+            bonitas e memoráveis.
+          </p>
+
+          <div class="about-infos">
+            <div class="about-info-card">
+              <span>Foco</span>
+              <h3>Sites e experiências digitais</h3>
+            </div>
+
+            <div class="about-info-card">
+              <span>Estilo</span>
+              <h3>Escuro, minimalista e artístico</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <div class="projects-bg-text">PROJECTS</div>
+
+      <div class="container projects-layout">
+        <div class="projects-left">
+          <span class="projects-label">projetos</span>
+          <h2 class="projects-title">
+            cartucho 3D real com foco visual para apresentar cada projeto.
+          </h2>
+
+          <p class="projects-description">
+            Cada projeto aparece ligado a um cartucho 3D real. Ao selecionar,
+            o conteúdo muda, atualizando informações, preview e destaque visual.
+          </p>
+
+          <div class="project-selector">
+            <button class="project-chip active" type="button" data-project="fluxy">
+              Fluxy
+            </button>
+            <button class="project-chip" type="button" data-project="store">
+              Site de Loja
+            </button>
+            <button class="project-chip" type="button" data-project="landing">
+              Landing Page
+            </button>
+          </div>
+        </div>
+
+        <div class="projects-right">
+          <div class="project-panel">
+            <div class="project-3d-card">
+              <div class="project-3d-header">
+                <span>cartucho 3D</span>
+              </div>
+
+              <div class="cartucho-3d-viewer" id="cartucho-3d-viewer"></div>
+
+              <div class="project-3d-footer">
+                <small>Modelo 3D com renderização em tempo real</small>
+              </div>
+            </div>
+
+            <div class="project-content">
+              <div class="project-top">
+                <span class="project-tag" id="project-tag">Projeto em destaque</span>
+                <h3 id="project-title">Fluxy</h3>
+                <p id="project-text">
+                  Sistema pensado para pequenos negócios, com foco em vendas,
+                  organização e controle de fluxo de caixa de forma acessível.
+                </p>
+
+                <div class="project-meta">
+                  <div class="project-meta-item">
+                    <span>Tecnologias</span>
+                    <strong id="project-tech">HTML, CSS e JavaScript</strong>
+                  </div>
+
+                  <div class="project-meta-item">
+                    <span>Categoria</span>
+                    <strong id="project-category">Sistema / Gestão</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="project-preview-card">
+                <img
+                  id="project-image"
+                  src="img/projects/fluxy.jpg"
+                  alt="Preview do projeto Fluxy"
+                />
+              </div>
+
+              <div class="project-actions">
+                <a href="#" class="btn btn-primary" id="project-link">Ver projeto</a>
+                <button class="btn btn-outline" id="project-next" type="button">
+                  Próximo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/projects.js"></script>
+  <script type="module" src="js/cartucho-3d.js"></script>
+</body>
+</html>
