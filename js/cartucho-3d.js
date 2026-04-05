@@ -1,5 +1,6 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/DRACOLoader.js";
 
 const container = document.getElementById("cartucho-3d-viewer");
 
@@ -41,6 +42,7 @@ if (container) {
   scene.add(rimLight);
 
   let model = null;
+  let baseScale = 1;
   let targetRotationY = -0.55;
   let targetRotationX = 0.18;
   let currentProject = "fluxy";
@@ -50,21 +52,58 @@ if (container) {
       rotationY: -0.55,
       rotationX: 0.18,
       positionY: 0.0,
-      scale: 2.25
+      scale: 1
     },
     store: {
       rotationY: -0.3,
       rotationX: 0.12,
       positionY: -0.02,
-      scale: 2.2
+      scale: 0.98
     },
     landing: {
       rotationY: -0.7,
       rotationX: 0.15,
       positionY: 0.01,
-      scale: 2.23
+      scale: 0.99
     }
   };
+
+  function fitModelToView(modelRoot) {
+    modelRoot.updateWorldMatrix(true, true);
+
+    const box = new THREE.Box3();
+    const tempBox = new THREE.Box3();
+    let hasMesh = false;
+
+    modelRoot.traverse((child) => {
+      if (!child.isMesh || !child.geometry) return;
+
+      if (!child.geometry.boundingBox) {
+        child.geometry.computeBoundingBox();
+      }
+
+      tempBox.copy(child.geometry.boundingBox);
+      tempBox.applyMatrix4(child.matrixWorld);
+      box.union(tempBox);
+      hasMesh = true;
+    });
+
+    if (!hasMesh) {
+      box.setFromObject(modelRoot);
+    }
+
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+
+    if (!Number.isFinite(maxDim) || maxDim <= 0) {
+      return false;
+    }
+
+    modelRoot.position.sub(center);
+    baseScale = 2.4 / maxDim;
+    return true;
+  }
 
   function showError(message) {
     container.innerHTML = `
@@ -91,6 +130,9 @@ if (container) {
   }
 
   const loader = new GLTFLoader();
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco/");
+  loader.setDRACOLoader(dracoLoader);
 
   loader.load(
     "assets/models/floppy_disk.glb",
@@ -103,7 +145,14 @@ if (container) {
         }
       });
 
-      model.scale.setScalar(projectStyles[currentProject].scale);
+      const fitted = fitModelToView(model);
+      if (!fitted) {
+        console.warn("Não foi possível calcular o tamanho do modelo 3D.");
+        showError("Modelo sem geometria visível. Verifique se o .glb possui meshes.");
+        return;
+      }
+
+      model.scale.setScalar(baseScale * projectStyles[currentProject].scale);
       model.position.set(0, projectStyles[currentProject].positionY, 0);
       model.rotation.set(
         projectStyles[currentProject].rotationX,
@@ -116,7 +165,13 @@ if (container) {
     undefined,
     (error) => {
       console.error("Erro ao carregar o modelo 3D:", error);
-      showError('Confira se o arquivo "floppy_disk.glb" está em assets/models/ e recarregue com Ctrl + F5.');
+
+      if (window.location.protocol === "file:") {
+        showError("Abra o projeto com um servidor local (ex: Live Server), não via arquivo local file://.");
+        return;
+      }
+
+      showError('Não foi possível renderizar "floppy_disk.glb". Verifique se o arquivo está íntegro e contém mesh visível.');
     }
   );
 
@@ -146,7 +201,7 @@ if (container) {
     targetRotationY = style.rotationY;
     targetRotationX = style.rotationX;
     model.position.y = style.positionY;
-    model.scale.setScalar(style.scale);
+    model.scale.setScalar(baseScale * style.scale);
   });
 
   const clock = new THREE.Clock();
